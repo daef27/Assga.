@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login - ASSGA</title>
+
+<style>
+
+/* ================= RESET ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#001f3f,#0059b3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* ================= CARD ================= */
+
+.container{
+  background:white;
+  padding:40px;
+  width:100%;
+  max-width:400px;
+  border-radius:15px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  animation:fadeIn 0.6s ease-in-out;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:30px;
+  color:#003366;
+}
+
+label{
+  font-size:14px;
+  font-weight:600;
+  display:block;
+  margin-top:15px;
+}
+
+.input-group{
+  position:relative;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin-top:5px;
+  outline:none;
+  transition:0.3s;
+}
+
+input:focus{
+  border-color:#0059b3;
+  box-shadow:0 0 5px rgba(0,89,179,0.4);
+}
+
+.toggle-senha{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  font-size:14px;
+  color:#0059b3;
+}
+
+/* ================= BOTÃO ================= */
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:25px;
+  border:none;
+  border-radius:8px;
+  background:#003366;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#0059b3;
+  transform:scale(1.02);
+}
+
+/* ================= ERRO ================= */
+
+.erro{
+  color:red;
+  font-size:13px;
+  margin-top:10px;
+  text-align:center;
+  min-height:18px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:20px;
+  color:white;
+  font-size:14px;
+  text-align:center;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:480px){
+  .container{
+    padding:25px;
+  }
+}
+
+/* ================= ANIMAÇÃO ================= */
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Área Administrativa - ASSGA</h2>
+
+  <label>CPF</label>
+  <input type="text" id="cpf" placeholder="000.000.000-00">
+
+  <label>Senha</label>
+  <div class="input-group">
+    <input type="password" id="senha" placeholder="Digite sua senha">
+    <span class="toggle-senha" onclick="toggleSenha()">Mostrar</span>
+  </div>
+
+  <button onclick="login()">Entrar</button>
+
+  <div class="erro" id="mensagem"></div>
+</div>
+
+<footer>
+  © 2026 - Sistema Administrativo ASSGA
+</footer>
+
+<script>
+
+/* ================= VERIFICAR SE JÁ ESTÁ LOGADO ================= */
+
+if(localStorage.getItem("adminLogado") === "true"){
+  window.location.href = "painel-admin.html";
+}
+
+/* ================= LOGIN ================= */
+
+function login(){
+
+  const cpf = document.getElementById("cpf").value.trim();
+  const senha = document.getElementById("senha").value.trim();
+  const mensagem = document.getElementById("mensagem");
+
+  const cpfAdmin = "000.000.000-00";
+  const senhaAdmin = "1234";
+
+  if(cpf === "" || senha === ""){
+    mensagem.innerText = "Preencha todos os campos!";
+    return;
+  }
+
+  if(cpf === cpfAdmin && senha === senhaAdmin){
+
+    localStorage.setItem("adminLogado","true");
+    window.location.href = "painel-admin.html";
+
+  }else{
+    mensagem.innerText = "CPF ou senha inválidos!";
+  }
+}
+
+/* ================= ENTER PARA LOGAR ================= */
+
+document.addEventListener("keydown", function(event){
+  if(event.key === "Enter"){
+    login();
+  }
+});
+
+/* ================= MOSTRAR / OCULTAR SENHA ================= */
+
+function toggleSenha(){
+  const senhaInput = document.getElementById("senha");
+  const toggle = document.querySelector(".toggle-senha");
+
+  if(senhaInput.type === "password"){
+    senhaInput.type = "text";
+    toggle.innerText = "Ocultar";
+  }else{
+    senhaInput.type = "password";
+    toggle.innerText = "Mostrar";
+  }
+}
+
+</script>
+
+</body>
+</html>

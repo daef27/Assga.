@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Pagamentos - ASSGA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#003366,#0055aa);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:95%;
+    max-width:900px;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#003366;
+}
+
+.tabela{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.tabela th{
+    background:#003366;
+    color:white;
+    padding:12px;
+}
+
+.tabela td{
+    padding:10px;
+    border-bottom:1px solid #ccc;
+    text-align:center;
+}
+
+.status-pago{
+    color:green;
+    font-weight:bold;
+}
+
+.status-pendente{
+    color:red;
+    font-weight:bold;
+}
+
+button{
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+    margin:3px;
+    transition:0.3s;
+}
+
+.btn-pagar{
+    background:green;
+    color:white;
+}
+
+.btn-pagar:hover{
+    background:darkgreen;
+}
+
+.btn-excluir{
+    background:red;
+    color:white;
+}
+
+.btn-excluir:hover{
+    background:darkred;
+}
+
+.btn-voltar{
+    background:#003366;
+    color:white;
+}
+
+.btn-voltar:hover{
+    background:#0055aa;
+}
+
+.resumo{
+    margin-top:15px;
+    font-weight:bold;
+    text-align:right;
+    color:#003366;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Lista de Pagamentos - ASSGA</h2>
+
+<table class="tabela">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Curso</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody id="lista"></tbody>
+</table>
+
+<div class="resumo" id="resumo"></div>
+
+<br>
+<button onclick="limparTodos()" class="btn-excluir">🗑 Limpar Todos</button>
+
+</div>
+
+<script>
+function carregarLista(){
+    const lista = JSON.parse(localStorage.getItem("cursos")) || [];
+    const tabela = document.getElementById("lista");
+    const resumo = document.getElementById("resumo");
+
+    tabela.innerHTML = "";
+
+    let total = 0;
+    let pagos = 0;
+
+    lista.forEach((item, index)=>{
+        total += Number(item.valor);
+
+        if(!item.status){
+            item.status = "Pendente";
+        }
+
+        if(item.status === "Pago"){
+            pagos++;
+        }
+
+        tabela.innerHTML += `
+        <tr>
+            <td>${item.nome}</td>
+            <td>${item.curso || "-"}</td>
+            <td>R$ ${item.valor}</td>
+            <td class="${item.status === 'Pago' ? 'status-pago':'status-pendente'}">
+                ${item.status}
+            </td>
+            <td>
+                <button class="btn-pagar" onclick="marcarPago(${index})">✔ Pagar</button>
+                <button class="btn-excluir" onclick="excluir(${index})">Excluir</button>
+            </td>
+        </tr>
+        `;
+    });
+
+    resumo.innerHTML = `
+        Total de Inscritos: ${lista.length} |
+        Pagos: ${pagos} |
+        Total em Valores: R$ ${total}
+    `;
+
+    localStorage.setItem("cursos", JSON.stringify(lista));
+}
+
+function marcarPago(index){
+    let lista = JSON.parse(localStorage.getItem("cursos")) || [];
+    lista[index].status = "Pago";
+    localStorage.setItem("cursos", JSON.stringify(lista));
+    carregarLista();
+}
+
+function excluir(index){
+    let lista = JSON.parse(localStorage.getItem("cursos")) || [];
+    lista.splice(index,1);
+    localStorage.setItem("cursos", JSON.stringify(lista));
+    carregarLista();
+}
+
+function limparTodos(){
+    if(confirm("Deseja apagar todos os registros?")){
+        localStorage.removeItem("cursos");
+        carregarLista();
+    }
+}
+
+carregarLista();
+</script>
+
+</body>
+</html>

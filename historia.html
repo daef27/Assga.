@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>História - ASSGA</title>
+
+<style>
+:root {
+  --azul-principal: #003366;
+  --azul-claro: #73e2c6;
+  --azul-suave: #e3f2fd;
+  --branco: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--branco);
+  color: #333;
+  text-align: center;
+}
+
+/* TÍTULOS */
+h2 {
+  margin-top: 50px;
+  font-size: 32px;
+  color: var(--azul-principal);
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background: var(--azul-claro);
+  display: block;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+/* HISTÓRIA */
+.historia-texto {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px;
+  font-size: 18px;
+  background: var(--azul-suave);
+  border-radius: 15px;
+  line-height: 1.6;
+}
+
+/* RESPONSÁVEIS */
+.responsaveis {
+  padding: 60px 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.card {
+  background: var(--branco);
+  width: 260px;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.4s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  border-top: 5px solid var(--azul-claro);
+}
+
+.card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 4px solid var(--azul-claro);
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  color: var(--azul-principal);
+}
+
+.card p {
+  color: #555;
+  font-weight: 500;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer {
+  margin-top: 60px;
+  padding: 20px;
+  background: var(--azul-principal);
+  color: white;
+  font-weight: 500;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Nossa História</h2>
+
+<section class="historia-texto">
+  <h2>Sobre a ASSGA</h2>
+  <p>
+    A ASSGA foi fundada com o objetivo de promover o esporte,
+    integração social e desenvolvimento comunitário.
+    Ao longo dos anos, tornou-se referência na região,
+    formando atletas e fortalecendo a comunidade.
+  </p>
+</section>
+
+<section class="responsaveis">
+  <h2>Responsáveis</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <img src="imagens/foto2.jpg" alt="Presidente">
+      <h3>Nome do Presidente</h3>
+      <p>Presidente</p>
+    </div>
+
+    <div class="card">
+      <img src="imagens/foto3.jpg" alt="Diretor">
+      <h3>Nome do Diretor</h3>
+      <p>Diretor Esportivo</p>
+    </div>
+
+    <div class="card">
+      <img src="imagens/foto1.jpg" alt="Coordenador">
+      <h3>Nome do Coordenador</h3>
+      <p>Coordenador</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 ASSGA - Todos os direitos reservados
+</footer>
+
+<script>
+window.addEventListener("load", () => {
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
+    }, index * 300);
+  });
+});
+</script>
+
+</body>
+</html>

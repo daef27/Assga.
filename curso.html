@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Curso - ASSGA</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #003366, #0055aa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.header {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin-bottom: 10px;
+}
+
+.painel-link a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.form-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.valor-display {
+  font-weight: bold;
+  color: #003366;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px;
+  background: #003366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0055aa;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>Cadastro de Curso</h1>
+    <p class="painel-link">
+      Os dados ficam salvos automaticamente no navegador
+    </p>
+  </div>
+
+  <div class="form-card">
+    <input type="text" id="nome" placeholder="Nome completo">
+    <input type="email" id="email" placeholder="Email">
+
+    <select id="curso" onchange="atualizarValor()">
+      <option value="Básico de Libras" data-valor="150">Básico de Libras - R$150</option>
+      <option value="Intermediário de Libras" data-valor="250">Intermediário de Libras - R$250</option>
+    </select>
+
+    <div class="valor-display">
+      Valor: R$ <span id="valorCurso">150</span>
+    </div>
+
+    <button onclick="registrarCurso()">Registrar</button>
+    <button onclick="verInscritos()">Ver Inscritos</button>
+  </div>
+</div>
+
+<script>
+function atualizarValor() {
+  const select = document.getElementById("curso");
+  const valor = select.options[select.selectedIndex].dataset.valor;
+  document.getElementById("valorCurso").innerText = valor;
+}
+
+function registrarCurso() {
+  const nome = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const select = document.getElementById("curso");
+  const curso = select.value;
+  const valor = select.options[select.selectedIndex].dataset.valor;
+
+  if (!nome || !email) {
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  let lista = JSON.parse(localStorage.getItem("cursos")) || [];
+
+  const numeroInscricao = lista.length + 1;
+  const data = new Date().toLocaleString("pt-BR");
+
+  const cadastro = {
+    numero: numeroInscricao,
+    nome,
+    email,
+    curso,
+    valor,
+    status: "Confirmado",
+    data
+  };
+
+  lista.push(cadastro);
+  localStorage.setItem("cursos", JSON.stringify(lista));
+
+  alert("Cadastro realizado com sucesso!");
+
+  document.getElementById("nome").value = "";
+  document.getElementById("email").value = "";
+}
+
+function verInscritos() {
+  const lista = JSON.parse(localStorage.getItem("cursos")) || [];
+
+  if (lista.length === 0) {
+    alert("Nenhum inscrito ainda.");
+    return;
+  }
+
+  let conteudo = `
+    <h2 style="color:#003366">Lista de Inscritos - ASSGA</h2>
+    <p><strong>Total de Inscritos:</strong> ${lista.length}</p>
+    <hr><br>
+  `;
+
+  lista.forEach((curso) => {
+    conteudo += `
+      <p><strong>Nº Inscrição:</strong> ${curso.numero}</p>
+      <p><strong>Nome:</strong> ${curso.nome}</p>
+      <p><strong>Email:</strong> ${curso.email}</p>
+      <p><strong>Curso:</strong> ${curso.curso}</p>
+      <p><strong>Valor:</strong> R$ ${curso.valor}</p>
+      <p><strong>Status:</strong> ${curso.status}</p>
+      <p><strong>Data:</strong> ${curso.data}</p>
+      <hr><br>
+    `;
+  });
+
+  const janela = window.open("", "", "width=700,height=700");
+  janela.document.write(conteudo);
+}
+
+function gerarPDFInscritos() {
+  const lista = JSON.parse(localStorage.getItem("cursos")) || [];
+
+  if (lista.length === 0) {
+    alert("Nenhum inscrito para gerar PDF.");
+    return;
+  }
+
+  let elemento = document.createElement("div");
+
+  elemento.innerHTML = `
+    <h2 style="color:#003366">Lista Oficial de Inscritos</h2>
+    <p><strong>Total:</strong> ${lista.length}</p>
+    <hr><br>
+  `;
+
+  lista.forEach(curso => {
+    elemento.innerHTML += `
+      <p><strong>Nº:</strong> ${curso.numero}</p>
+      <p><strong>Nome:</strong> ${curso.nome}</p>
+      <p><strong>Email:</strong> ${curso.email}</p>
+      <p><strong>Curso:</strong> ${curso.curso}</p>
+      <p><strong>Valor:</strong> R$ ${curso.valor}</p>
+      <p><strong>Status:</strong> ${curso.status}</p>
+      <p><strong>Data:</strong> ${curso.data}</p>
+      <hr><br>
+    `;
+  });
+
+  html2pdf().from(elemento).save("Lista_Inscritos_ASSGA.pdf");
+}
+
+function limparLista() {
+  if (confirm("Deseja realmente apagar todos os inscritos?")) {
+    localStorage.removeItem("cursos");
+    alert("Lista limpa com sucesso!");
+  }
+}
+</script>
+
+</body>
+</html>

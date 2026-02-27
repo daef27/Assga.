@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diretoria - ASSGA</title>
+
+<style>
+
+/* ================= RESET ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#333;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  background:linear-gradient(90deg,#001f3f,#0059b3);
+  color:white;
+  padding:30px 20px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+header h1{
+  margin-bottom:10px;
+}
+
+header p{
+  font-size:16px;
+}
+
+.ano{
+  cursor:pointer;
+  padding:5px 10px;
+  border-radius:6px;
+  transition:0.3s;
+}
+
+.ano:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+.ano.ativo{
+  background:white;
+  color:#003366;
+  font-weight:bold;
+}
+
+/* ================= CONTAINER ================= */
+
+.diretoria-container{
+  max-width:1200px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  padding:0 20px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  transition:0.4s;
+  opacity:1;
+  transform:scale(1);
+}
+
+.card.hide{
+  opacity:0;
+  transform:scale(0.9);
+  pointer-events:none;
+  position:absolute;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+
+.card h2{
+  color:#003366;
+  font-size:20px;
+  margin-bottom:5px;
+}
+
+.card h3{
+  color:#0059b3;
+  margin-bottom:10px;
+  font-size:16px;
+}
+
+.card p{
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#001f3f;
+  color:white;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:768px){
+
+  header h1{
+    font-size:22px;
+  }
+
+  .card img{
+    height:180px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Diretoria da ASSGA</h1>
+  <p>
+    Gestões:
+    <span class="ano ativo" onclick="filtrarAno(2024,this)">2024</span> |
+    <span class="ano" onclick="filtrarAno(2025,this)">2025</span> |
+    <span class="ano" onclick="filtrarAno(2026,this)">2026</span>
+  </p>
+</header>
+
+<section class="diretoria-container">
+
+  <div class="card" data-ano="2024">
+    <img src="https://via.placeholder.com/300x300" alt="">
+    <h2>Presidente 2024</h2>
+    <h3>Presidente</h3>
+    <p>Responsável pela administração geral da associação e representação institucional.</p>
+  </div>
+
+  <div class="card" data-ano="2024">
+    <img src="https://via.placeholder.com/300x300" alt="">
+    <h2>Vice 2024</h2>
+    <h3>Vice-Presidente</h3>
+    <p>Apoia a presidência e coordena ações estratégicas e eventos.</p>
+  </div>
+
+  <div class="card" data-ano="2025">
+    <img src="https://via.placeholder.com/300x300" alt="">
+    <h2>Presidente 2025</h2>
+    <h3>Presidente</h3>
+    <p>Responsável pela administração geral da associação e representação institucional.</p>
+  </div>
+
+  <div class="card" data-ano="2026">
+    <img src="https://via.placeholder.com/300x300" alt="">
+    <h2>Presidente 2026</h2>
+    <h3>Presidente</h3>
+    <p>Responsável pela administração geral da associação e representação institucional.</p>
+  </div>
+
+</section>
+
+<footer>
+  © 2026 ASSGA - Diretoria Executiva
+</footer>
+
+<script>
+
+/* ================= FILTRO POR ANO ================= */
+
+function filtrarAno(ano, elemento){
+
+  const cards = document.querySelectorAll(".card");
+  const anos = document.querySelectorAll(".ano");
+
+  anos.forEach(a => a.classList.remove("ativo"));
+  elemento.classList.add("ativo");
+
+  cards.forEach(card=>{
+    if(card.dataset.ano == ano){
+      card.style.display="block";
+      setTimeout(()=> card.style.opacity="1",50);
+    }else{
+      card.style.display="none";
+    }
+  });
+
+}
+
+/* ================= MOSTRAR 2024 INICIAL ================= */
+
+window.onload = () => {
+  filtrarAno(2024, document.querySelector(".ano"));
+};
+
+</script>
+
+</body>
+</html>

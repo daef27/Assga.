@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatuto - ASSGA</title>
+
+<style>
+
+/* ================= RESET ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#f4f7fb;
+  color:#333;
+}
+
+/* ================= HEADER ================= */
+
+header{
+  background:linear-gradient(90deg,#001f3f,#0059b3);
+  color:white;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+header h1{
+  font-size:28px;
+}
+
+/* ================= LAYOUT ================= */
+
+.container{
+  display:flex;
+  max-width:1200px;
+  margin:40px auto;
+  gap:30px;
+  padding:0 20px;
+}
+
+/* ================= MENU LATERAL ================= */
+
+.menu-lateral{
+  width:250px;
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  position:sticky;
+  top:20px;
+  height:fit-content;
+}
+
+.menu-lateral h3{
+  margin-bottom:15px;
+  color:#003366;
+}
+
+.menu-lateral ul{
+  list-style:none;
+}
+
+.menu-lateral li{
+  padding:10px;
+  margin-bottom:8px;
+  cursor:pointer;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.menu-lateral li:hover,
+.menu-lateral li.ativo{
+  background:#0059b3;
+  color:white;
+}
+
+.menu-lateral button{
+  margin-top:20px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#003366;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.menu-lateral button:hover{
+  background:#0059b3;
+}
+
+/* ================= CONTEÚDO ================= */
+
+.conteudo{
+  flex:1;
+}
+
+.conteudo section{
+  background:white;
+  padding:30px;
+  border-radius:15px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+
+.conteudo section:hover{
+  transform:translateY(-3px);
+}
+
+.conteudo h2{
+  margin-bottom:15px;
+  color:#003366;
+}
+
+.conteudo p{
+  line-height:1.8;
+  text-align:justify;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#001f3f;
+  color:white;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:900px){
+
+  .container{
+    flex-direction:column;
+  }
+
+  .menu-lateral{
+    width:100%;
+    position:relative;
+  }
+
+}
+
+@media(max-width:480px){
+
+  header h1{
+    font-size:20px;
+  }
+
+  .conteudo section{
+    padding:20px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Estatuto da ASSGA</h1>
+</header>
+
+<div class="container">
+
+  <!-- MENU -->
+  <aside class="menu-lateral">
+    <h3>Capítulos</h3>
+    <ul>
+      <li onclick="scrollToSection('cap1')" id="btn-cap1">Capítulo I</li>
+      <li onclick="scrollToSection('cap2')" id="btn-cap2">Capítulo II</li>
+      <li onclick="scrollToSection('cap3')" id="btn-cap3">Capítulo III</li>
+      <li onclick="scrollToSection('cap4')" id="btn-cap4">Capítulo IV</li>
+    </ul>
+    <button onclick="imprimirEstatuto()">Imprimir Estatuto</button>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="conteudo">
+
+    <section id="cap1">
+      <h2>Capítulo I – Da Denominação</h2>
+      <p>
+        A ASSGA é uma associação civil sem fins lucrativos, com duração por tempo indeterminado, 
+        com sede e foro nesta cidade, regendo-se pelo presente Estatuto e pela legislação vigente.
+      </p>
+    </section>
+
+    <section id="cap2">
+      <h2>Capítulo II – Dos Objetivos</h2>
+      <p>
+        A associação tem como finalidade promover atividades sociais, culturais e esportivas,
+        incentivar a participação comunitária e desenvolver ações voltadas ao bem-estar social.
+      </p>
+    </section>
+
+    <section id="cap3">
+      <h2>Capítulo III – Dos Associados</h2>
+      <p>
+        São associados todos aqueles que forem admitidos conforme regulamento interno,
+        respeitando os direitos e deveres estabelecidos neste Estatuto.
+      </p>
+    </section>
+
+    <section id="cap4">
+      <h2>Capítulo IV – Da Diretoria</h2>
+      <p>
+        A diretoria será composta por Presidente, Vice-Presidente, Secretário e Tesoureiro,
+        eleitos em assembleia geral, com mandato conforme regulamento.
+      </p>
+    </section>
+
+  </main>
+
+</div>
+
+<footer>
+  © 2026 ASSGA - Todos os direitos reservados
+</footer>
+
+<script>
+
+/* ================= SCROLL ================= */
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+/* ================= MENU ATIVO ================= */
+
+const sections = document.querySelectorAll("section");
+const menuItems = document.querySelectorAll(".menu-lateral li");
+
+window.addEventListener("scroll", () => {
+
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if(pageYOffset >= sectionTop){
+      current = section.getAttribute("id");
+    }
+  });
+
+  menuItems.forEach(li=>{
+    li.classList.remove("ativo");
+    if(li.id === "btn-" + current){
+      li.classList.add("ativo");
+    }
+  });
+
+});
+
+/* ================= IMPRIMIR ================= */
+
+function imprimirEstatuto(){
+  window.print();
+}
+
+</script>
+
+</body>
+</html>

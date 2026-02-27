@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>História Esportiva - ASSGA</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#003366,#0059b3);
+  color:#fff;
+}
+
+header{
+  text-align:center;
+  padding:30px 20px;
+}
+
+header h1{
+  font-size:28px;
+}
+
+.container{
+  padding:20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+section{
+  background:#fff;
+  color:#333;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+  margin-bottom:15px;
+  color:#003366;
+}
+
+p{
+  margin-bottom:15px;
+  line-height:1.6;
+}
+
+/* GALERIA */
+.galeria{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+.galeria img{
+  width:100%;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.galeria img:hover{
+  transform:scale(1.05);
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal img{
+  max-width:90%;
+  max-height:80%;
+  border-radius:10px;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  background:#002244;
+  margin-top:30px;
+}
+
+@media(max-width:768px){
+  header h1{
+    font-size:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Departamento Esportivo - ASSGA</h1>
+  <p>História, Objetivo e Momentos Especiais</p>
+</header>
+
+<div class="container">
+
+  <!-- OBJETIVO -->
+  <section>
+    <h2>Nosso Objetivo</h2>
+    <p>
+      O Departamento Esportivo da ASSGA tem como objetivo promover a prática
+      esportiva, incentivar a disciplina, fortalecer a união da comunidade
+      e desenvolver talentos locais.
+    </p>
+
+    <p>
+      Através do esporte, buscamos transformar vidas, estimular a saúde,
+      o respeito e o trabalho em equipe.
+    </p>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section>
+    <h2>Nossa História</h2>
+
+    <p><strong>2024:</strong> Início de uma nova fase com organização de campeonatos internos e fortalecimento das equipes.</p>
+
+    <p><strong>2025:</strong> Participação em competições municipais e conquista de importantes resultados para a associação.</p>
+
+    <p><strong>2026:</strong> Expansão do projeto esportivo, inclusão de novos atletas e ampliação das atividades sociais.</p>
+  </section>
+
+  <!-- GALERIA -->
+  <section>
+    <h2>Galeria de Fotos</h2>
+
+    <div class="galeria">
+      <img src="src/imagens/foto1.jpg" onclick="abrirModal(this.src)">
+      <img src="src/imagens/foto2.jpg" onclick="abrirModal(this.src)">
+      <img src="src/imagens/foto3.jpg" onclick="abrirModal(this.src)">
+    </div>
+
+  </section>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="fecharModal()">
+  <img id="imagemModal">
+</div>
+
+<footer>
+  © 2026 Departamento Esportivo - ASSGA
+</footer>
+
+<script>
+function abrirModal(src){
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("imagemModal").src = src;
+}
+
+function fecharModal(){
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+</body>
+</html> 
